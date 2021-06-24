@@ -1,0 +1,66 @@
+
+% % Defines highlighting rules for PseudoML, a pretend ML-style language
+
+\definecolor{solar yellow}{HTML}{B58900}
+\definecolor{solar orange}{HTML}{CB4B16}
+\definecolor{solar red}{HTML}{DC322F}
+\definecolor{solar magenta}{HTML}{D33682}
+\definecolor{solar violet}{HTML}{6C71C4}
+\definecolor{solar blue}{HTML}{268BD2}
+\definecolor{solar cyan}{HTML}{2AA198}
+\definecolor{solar green}{HTML}{859900}
+
+\def\ifnotorange#1{%
+\extractcolorspec{.}\currentcolor%
+\extractcolorspec{solar orange}\stringcolor%
+\ifx\currentcolor\stringcolor\else
+    \color{#1}%
+\fi
+}
+
+\lstset{
+    showspaces=false,
+    showstringspaces=false,
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    keywordstyle=\ifnotorange{solar blue},
+    keywordstyle=[2]\ifnotorange{solar cyan},
+    keywordstyle=[3]\ifnotorange{black},
+    stringstyle=\color{solar orange},
+    commentstyle=\color{solar violet}\itshape,
+    texcl=true%
+}
+
+\lstdefinelanguage{pseudoml}{
+    keywords={type, typeclass, instance, data, where, let, in, if, then, else, as, using},
+    literate=
+        {=}{{{\color{solar blue}=}}}{1}
+        {|}{{{\color{solar blue}|}}}{1}
+        {:}{{{\color{solar blue}:}}}{1}
+        {=>}{{{\color{solar blue}\( \Rightarrow \)}}}{2}
+        {->}{{{\color{solar blue}\( \rightarrow \)}}}{2}
+        {==}{{{\color{black}==}}}{2}
+        {/=}{{{\color{black}/=}}}{2}
+        {<=}{{{\color{black}<=}}}{2}
+        {>=}{{{\color{black}>=}}}{2}
+        {::}{{{\color{solar magenta}::}}}{2},
+    morestring=[b]",
+    comment=[l]{--}
+}
+
+\def\beginlstdelim#1#2#3%
+{%
+    \def\endlstdelim{#2\egroup}%
+    \ttfamily#1\bgroup\color{#3}\aftergroup\endlstdelim%
+}
+
+\lstdefinelanguage{js}{
+    keywords={function, return, null, if, else, const, let},
+    morekeywords=[2]{true, false},
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    moredelim=**[is][\color{solar yellow}\beginlstdelim{\$\{}{\}}{black}]{\$\{}{\}},
+    morestring=[b]',
+    morestring=**[b]{`},
+    morestring=[b]"%
+}
